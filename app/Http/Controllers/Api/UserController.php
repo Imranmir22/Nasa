@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Exception;
 use Illuminate\Validation\ValidationException;
-
+//use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Database\QueryException;
@@ -128,17 +128,15 @@ class UserController extends Controller
      */
     public function show($id)
     {
-    //  try
-    //  {
-        $user=User::findOrFail($id);
-
-        // if(!$user)
-        //     throw new QueryException();
+        try
+        {
+            $user=User::findOrFail($id);
             return $user;
-        // }
-        // catch(\Illuminate\Database\QueryException $ex){
-        //     dd($ex->getMessage());
-        //   }
+        }
+        catch(ModelNotFoundException $ex)
+        {return "ddd";
+            return $ex->getMessage();
+        }
     }
 
     /**
@@ -226,7 +224,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {//dd(Auth::user());
+    {
         try {
             // if (Auth::user()->id == $id) {
             //     throw new Exception("You can not delete yourself");
