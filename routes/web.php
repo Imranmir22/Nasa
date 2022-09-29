@@ -2,8 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Api\EmailController;
-use App\Http\Controllers\Api\LoginController;
+use App\Http\Controllers\Companies;
+use App\Http\Controllers\Employees;
+use App\Http\Controllers\NasaController;
 
 
 /*
@@ -17,23 +18,26 @@ use App\Http\Controllers\Api\LoginController;
 |
 */
 
+Route::view('save-employee','employees');
+Route::view('save-company','companies');
+Route::view('update-employee','update_employee');
+Route::get('get-employee/{id}', [Employees::class,'get_employee']);
+Route::get('update-company/{id}', [Companies::class,'update_employee']);
+
+Route::resource('employee', Employees::class);
+Route::resource('company', Companies::class);
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('send',[EmailController::class,'sendmail']);
-Route::view('/send-mail','/sendMail');
-// Route::get('send-mail', function () {
-//         $details = [
-//         'title' => 'Mail from ItSolutionStuff.com',
-//         'body' => 'This is for testing email using smtp'
-//     ];
 
-//     \Mail::to('immu12725@gmail.com')->send(new \App\Mail\MyTestMail($details));
 
-//     dd("Email is Sent.");
-// });
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+require __DIR__.'/auth.php';
 
-//Route::view('googleAuth');
-Route::get('auth/login',[LoginController::class,'redirectToGoogle']);
-Route::get('postmessage',[LoginController::class,'handleGoogleCallback']);
+Route::view('nasa','nasa');
+Route::view('nasa_chart','nasa_charts');
+Route::post('show-data',[NasaController::class,'get_data']);

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\RegistrationController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\LoginController;
+use App\Http\Controllers\Api\SeekexController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,24 +17,16 @@ use App\Http\Controllers\Api\LoginController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::get('/bucketvolumes',function(){
+    echo 'bucket';
+});
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-// Route::middleware('api')->post('login', UserController::class . '@login');
 
-// Route::middleware(['api', 'auth:sanctum'])->group(function () {
-//    // Route::get('/register',[Registration::class,'try']);
-//     Route::resource('user', UserController::class)->only(['show', 'index', 'store', 'update', 'destroy']);
-//     Route::post('logout', UserController::class . '@logout');
-// });
+// Route::view('balls','/ball');
+// Route::view('buckets','/buckets');
+// Route::view('fill_buckets','/fill_buckets');
 
-Route::view('loginuser','/login');
 
-Route::view('reg','/register');
-//Route::view('list','/list');
-
-Route::post('/registerd',[RegistrationController::class,'register_user']);
-
-Route::post('/userlogin',[LoginController::class,'login_user'])->name('login');
-
+// Route::post('/bucketvolumes',[SeekexController::class,'bucket_volume']);
+// Route::post('/ballvolumes',[SeekexController::class,'ball_volume']);
+// Route::post('/fill',[SeekexController::class,'fill_buckets']);
