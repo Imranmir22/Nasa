@@ -14,7 +14,7 @@ class EventServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    protected $listen = [
+    protected $listen = [  //to register event with listener 
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],      
@@ -22,7 +22,10 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\SendEmail'
           ]
     ];
-
+ 
+    protected $observers = [        //to register observers  (observers are used to group all of your 
+        Company::class => [CompanyRegisterObserver::class],  //                              listeners into a single class.)
+    ];                                          //observers can also be registered in boot method below
     /**
      * Register any events for your application.
      *

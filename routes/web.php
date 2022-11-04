@@ -7,6 +7,7 @@ use App\Http\Controllers\NasaController;
 use App\Http\Controllers\FirebaseController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DepartmentController;
 
 
 
@@ -44,6 +45,8 @@ Route::view('save-company','company');
 Route::get('companies/{department}/employee/{employee:phone}', [CompanyController::class,'get_companies']);
 Route::post('companies/add', [CompanyController::class,'register_company']);
 Route::resource('company', CompanyController::class,['names' => 'company_resource']);
+Route::resource('department', DepartmentController::class);
+
 Route::view('manual_login','login.manual_login');
 Route::post('user_manual_login',[UserController::class,'user_manual_login'])->name('user_login');
 Route::get('/storage-functions',[UserController::class,'storage_functions']);

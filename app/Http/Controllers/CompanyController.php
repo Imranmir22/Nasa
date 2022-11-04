@@ -71,11 +71,14 @@ class CompanyController extends Controller
         $company->create($request);
         return $request;
     }
-    public function index(Department $company)
+    public function index()
     {
+
+        
         //
-        event (new UserCreated('abc@gmail.com'));
-        return $company;
+        // event (new UserCreated('abc@gmail.com'));  //emit the event 
+        UserCreated::dispatch('abc@gmail.com');  //by this we can also emit the event
+        return ;
         return Department::with('companies')->get();
 
         return Company::doesntHave('company_departments')->get();
@@ -182,7 +185,7 @@ class CompanyController extends Controller
         {
             // $this->authorize('update', $company);
             
-            if ($request->user()->cannot('updatxe', $company)) {  // two methods cannot and can
+            if ($request->user()->cannot('update', $company)) {  // two methods cannot and can
                 // abort(403);
 
                 throw new GateException();
