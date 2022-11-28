@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-
+use App\Models\User;
 class UserController extends Controller
 {
     //
@@ -98,5 +98,13 @@ class UserController extends Controller
         Storage::makeDirectory('storage');//make directory
 
         Storage::deleteDirectory('storage');//delete directory
+    }
+    public function time_date()
+    {
+        User::whereDate('created_at', date('Y-m-d'));
+        User::whereDay('created_at', date('d'));
+        User::whereMonth('created_at', date('m'));
+        User::whereYear('created_at', date('Y'));
+        # code...
     }
 }
