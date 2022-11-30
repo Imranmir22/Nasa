@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\BookController;
-
+use App\Http\Controllers\GoogleDocsController;
 
 
 /*
@@ -16,6 +16,7 @@ use App\Http\Controllers\BookController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('google',[GoogleDocsController::class,'getValues']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
