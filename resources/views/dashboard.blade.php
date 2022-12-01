@@ -12,10 +12,9 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
              
-                    <a href="save-employee" style="color:red">Register Employee</a><br>
-                    <a href="save-company" style="color:red">Register Company</a><br>
-                    <a href="employee" style="color:red">Total Employees</a><br>
-                    <a href="company" style="color:red">Total Companies</a>
+                    <a href="google" style="color:red">Google Docs</a><br>
+                    <label for="floatingInputValue bg-secondry">Click to store Docs to Database</label>
+
 
                 </div>
             </div>

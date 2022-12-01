@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Companies;
 use App\Http\Controllers\Employees;
+use App\Http\Controllers\GoogleDocsController;
 use App\Http\Controllers\NasaController;
 
 
@@ -23,6 +24,8 @@ Route::view('save-company','companies');
 Route::view('update-employee','update_employee');
 Route::get('get-employee/{id}', [Employees::class,'get_employee']);
 Route::get('update-company/{id}', [Companies::class,'update_employee']);
+Route::get('google', [GoogleDocsController::class,'getValues']);
+Route::get('google-list', [GoogleDocsController::class,'googleDocs']);
 
 Route::resource('employee', Employees::class);
 Route::resource('company', Companies::class);
