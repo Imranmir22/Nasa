@@ -65,7 +65,7 @@ class CompanyController extends Controller
         //---------------------------------//
 
         $filePath=Storage::put('company_logo', $request->logo);//company_logo is directory name were 
-        $company=new Company();                      //were logo will be uploaded
+        $company=new Company();                      // logo will be uploaded inside public/storage folder
         $request->logo=$filePath;
         $request=$request->except('_token');
         $company->create($request);
