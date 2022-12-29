@@ -21,6 +21,7 @@ class VerifyCsrfToken extends Middleware
         'company',
         'show-data',
         'companies/add',
-        'user_manual_login'
+        'user_manual_login',
+        'register-user'
     ];
 }

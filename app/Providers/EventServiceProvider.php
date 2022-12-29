@@ -20,6 +20,9 @@ class EventServiceProvider extends ServiceProvider
         ],      
         'App\Events\Usercreated'=> [
             'App\Listeners\SendEmail'
+        ],
+        'App\Events\UserRegistered'=> [
+            'App\Listeners\UserRegisterListener'
           ]
     ];
  

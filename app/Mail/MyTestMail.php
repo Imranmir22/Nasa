@@ -6,11 +6,12 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Storage;
 
 class MyTestMail extends Mailable
 {
     use Queueable, SerializesModels;
-public $details;
+    public $details;
     /**
      * Create a new message instance.
      *
@@ -19,8 +20,10 @@ public $details;
     public function __construct($details)
     {
         //
-         //   dd($details);
+         //   
+      
         $this->details = $details;
+
     }
 
     /**
@@ -30,9 +33,19 @@ public $details;
      */
     public function build()
     {
-
+       
       //  return $this->view('view.name');
-        return $this->subject($this->details['title'])
-                    ->view('emails.myTestMail',['details'=>$this->details['body']]);
+     
+     $content=$this->details->event;
+     $name=$content['name'];
+     $email=$content['email'];
+     $address=$content['address'];
+     $number=$content['number'] ?? "";
+     $userData=" The Details of User are Name:$name , email :$email ,address :$address ,number: $number";
+     Storage::put('tech.txt', $userData);
+     $filePath=Storage::path('tech.txt');
+        return $this->subject("hello from tech")
+                    ->view('emails.myTestMail',['details'=>$content])
+                    ->attach($filePath);
     }
 }
