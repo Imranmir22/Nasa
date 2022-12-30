@@ -57,8 +57,8 @@ class AuthController extends Controller
 
 
         $request->validate([
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
+            'first_name' => 'required|string|max:255| regex:/^([^0-9]*)$/',
+            'last_name' => 'required|string|max:255| regex:/^([^0-9]*)$/',
             'email' => 'required|string|email|max:255|unique:users,email',
             'age'  => 'required|max:3',
             'mobile_number' => 'required|max:10|unique:users,mobile_number',
