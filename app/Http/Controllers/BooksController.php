@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Validation\Rule;
 
 class BooksController extends Controller
 {
@@ -47,7 +48,7 @@ class BooksController extends Controller
     {
 
         $request->validate([
-            'book_name' => 'required|string|max:255',
+            'book_name' => 'required|string|max:255 | unique:books,book_name',
             'author' => 'required|string|max:255',
             'cover_image' => 'required',
         ]);
@@ -107,7 +108,7 @@ class BooksController extends Controller
         {
             $book=Book::findorfail($id);
             $request->validate([
-                'book_name' => 'string|max:255',
+                'book_name' => ['string|max:255',Rule::unique('books')->ignore($book->id,'book_name')],
                 'author' => 'string|max:255',
                 'cover_image' => 'mimes:jpg,jpeg,png',
             ]);
