@@ -16,10 +16,13 @@ class User extends Migration
         //
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('email');
-            $table->string('password',300);
-            $table->enum('role', ['admin', 'user'])->nullable()->default('user');
+            $table->string('first_name',255);
+            $table->string('last_name',255);
+            $table->bigInteger('mobile_number')->unique();
+            $table->string('email',255)->unique();
+            $table->tinyInteger('age');
+            $table->enum('gender',['m','f','o'])->default('m');
+            $table->string('city',255);
             $table->timestamps();
 
 

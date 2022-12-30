@@ -46,11 +46,11 @@ class RouteServiceProvider extends ServiceProvider
     protected function configureRateLimiting()
     {
         RateLimiter::for('all-companies', function (Request $request) {
-           return Limit::perMinute(1);
+           return Limit::perMinute(100);
 
-        //    return  $request->user()->role=='admin'
-        //     ? Limit::none()
-        //     : Limit::perMinute(100);
+           return  $request->user()->role=='admin'
+            ? Limit::none()
+            : Limit::perMinute(100);
         });
     }
 }
