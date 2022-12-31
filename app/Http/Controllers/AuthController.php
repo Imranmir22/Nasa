@@ -161,7 +161,7 @@ class AuthController extends Controller
 
     public function books_on_rent()
     {    
-        $articles = User::whereHas('rent_books')->get();
-        return $articles;
+        $rent_books=User::with('rent_books')->get();
+        return $rent_books;
     }
 }
