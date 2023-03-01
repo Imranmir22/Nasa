@@ -48,7 +48,7 @@
                  <a href="get-employee/{{ $res->id }}" color: rgb(241 245 249);> Update</a>
                  </td>
                  <td>
-                    <form method=POST action="employee/{{$res->id }}">
+                    <form method=POST action="employee/{{$res->id }}" onclick="confirm('all employess in this company will also be deleted')">
                         @csrf
                         @method("DELETE")
                         <input type="submit" value="Delete">

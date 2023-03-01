@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 use App\Models\Company;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Http\Request;
 use App\Models\Employee;
+
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\CompanyRequest;
 
-class Companies extends Controller
+class CompaniesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -122,6 +122,7 @@ class Companies extends Controller
      */
     public function destroy($id)
     {
+        Employee::where('company_id',$id)->delete();
         Company::find($id)->delete();
         return redirect('company');
     }

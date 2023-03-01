@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\EmployeeRequest;
 use App\Models\Employee;
 
-class Employees extends Controller
+class EmployeesController extends Controller
 {
     /**
      * Display a listing of the resource.
