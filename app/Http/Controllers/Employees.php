@@ -1,11 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
-use Validate;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\View;
+use App\Http\Requests\EmployeeRequest;
 use App\Models\Employee;
 
 class Employees extends Controller
@@ -37,22 +34,13 @@ class Employees extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(EmployeeRequest $request)
     {
        $employee=new Employee();
-        //
-        $request->validate(
-            [
-                'first_name'=>'required',
-                'last_name'=>'required',
-                'company_id'=>'exists:companies,id',
-                'email'=>'email',
-                'phone'=>'integer'
-            ]
-            );
 
             $employee->first_name= $request->first_name;
             $employee->last_name=$request->last_name;
+            $employee->gender=$request->gender;
             $employee->company_id= $request->company_id;
             $employee->email=$request->email;
             $employee->phone= $request->phone;
@@ -69,19 +57,6 @@ class Employees extends Controller
     public function show($id)
     {
         //
-        try
-        {
-            $user=Employee::findOrFail($id);
-
-            return view('show_employee', ['response'=>$user]);
-           
-        }
-        catch(ModelNotFoundException $ex)
-        {
-            return['message'=>"employee id $id not exists"];
-        }
-
-
     }
 
     /**
@@ -102,25 +77,14 @@ class Employees extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EmployeeRequest $request, $id)
     {
-        //
         $employee=Employee::find($id);
         if($employee)
         {
-            $request->validate(
-            [
-                'first_name'=>'required',
-                'last_name'=>'required',
-                'company_id'=>'exists:companies,id',
-                'email'=>'email',
-                'phone'=>'integer'
-            ]
-            );
-
-
             $employee->first_name= $request->first_name;
             $employee->last_name=$request->last_name;
+            $employee->gender=$request->gender;
             $employee->company_id= $request->company_id;
             $employee->email=$request->email;
             $employee->phone= $request->phone;
@@ -128,7 +92,6 @@ class Employees extends Controller
             return redirect('employee');
         }
         else {
-            # code...
             return ["message"=>"no record found"];
         }
     }
@@ -141,11 +104,8 @@ class Employees extends Controller
      */
     public function destroy($id)
     {
-       $result= Employee::destroy($id);
-       if($result)
-         return redirect('employee');
-       else 
-        return ["message"=>"no record found"];
+       Employee::find($id)->delete($id);
+       return redirect('employee');
     }
     
     public function get_employee($id)

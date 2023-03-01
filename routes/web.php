@@ -18,14 +18,17 @@ use App\Http\Controllers\NasaController;
 |
 */
 
-Route::view('save-employee','employees');
-Route::view('save-company','companies');
-Route::view('update-employee','update_employee');
-Route::get('get-employee/{id}', [Employees::class,'get_employee']);
-Route::get('update-company/{id}', [Companies::class,'update_employee']);
 
-Route::resource('employee', Employees::class);
-Route::resource('company', Companies::class);
+Route::middleware(['auth'])->group(function () {
+    Route::view('save-employee','employees');
+    Route::view('save-company','companies');
+    // Route::view('update-employee','update_employee');
+    Route::get('get-employee/{id}', [Employees::class,'get_employee']);
+    Route::get('update-company/{id}', [Companies::class,'update_company']);
+    Route::resource('employee', Employees::class);
+    Route::resource('company', Companies::class);
+});
+
 
 Route::get('/', function () {
     return view('welcome');

@@ -1,12 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Companie;
+use App\Models\Company;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Models\Employee;
 use Illuminate\Support\Facades\Storage;
-
+use App\Http\Requests\CompanyRequest;
 
 class Companies extends Controller
 {
@@ -18,7 +18,7 @@ class Companies extends Controller
     public function index()
     {
         //
-        $result=Companie::paginate(10); 
+        $result=Company::paginate(10); 
         return view('all_companies', ['response'=>$result]);
     }
 
@@ -38,24 +38,18 @@ class Companies extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CompanyRequest $request)
     {
         //
-        $company = new Companie();
-        $request->validate(
-            [
-                'name'=>'required',
-                'email'=>'email',
-                'logo'=>['image'],
-                'website'=>'url'
-            ]
-            );
+        $company = new Company();
+        if( $request->file('logo'))
+        {
             $path= $request->file('logo')->store('public');    
             $path= pathinfo($path);
-
+            $company->logo=  $path['basename'];
+        }
             $company->name= $request->name;
             $company->email=$request->email;
-            $company->logo=  $path['basename'];
             $company->website= $request->website;
             $company->save(); 
             return view('dashboard');
@@ -70,17 +64,7 @@ class Companies extends Controller
      */
     public function show($id)
     {
-        //
-        try
-        {
-            $user=Companie::findOrFail($id);
-            return view('show_company',['response'=>$user]);
-            
-        }
-        catch(ModelNotFoundException $ex)
-        {
-            return['message'=>"company with id $id not exists"];
-        }
+        
     }
 
     /**
@@ -101,28 +85,28 @@ class Companies extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CompanyRequest $request, $id)
     {
         //
-        $company=Employee::find($id);
+        // $request->validate(
+        //     [
+        //         'name'=>'required',
+        //         'email'=>'email',
+        //         // 'logo'=>['image','dimensions:max_width=100,max_height=100'],
+        //         'website'=>'url'
+        //     ]
+        //     );
+        $company=Company::find($id);
         if($company)
         {
-            $request->validate(
-                [
-                    'name'=>'required',
-                    'email'=>'email',
-                    'logo'=>['image'],
-                    'website'=>'url'
-                ]
-                );
-                // $path= $request->file('logo')->store('public');    
-                // $path= pathinfo($path);
-                // $file=$company->logo;
-                // Storage::delete($file);
-
+                if($request->file('logo'))
+                {            
+                    $path= $request->file('logo')->store('public');    
+                    $path= pathinfo($path);
+                    $company->logo=$path['basename'];
+                }
                 $company->name= $request->name;
                 $company->email=$request->email;
-                // $company->logo=  $path['basename'];
                 $company->website= $request->website;
                 $company->save(); 
                 return redirect('company');    
@@ -138,17 +122,12 @@ class Companies extends Controller
      */
     public function destroy($id)
     {
-        //
-        Employee::where('company_id',$id)->delete();
-        $result= Companie::destroy($id);
-        if($result)
-        {
-            return redirect('company');    
-        }
+        Company::find($id)->delete();
+        return redirect('company');
     }
     public function update_company($id)
     {
-        $result=Companie::find($id);
+        $result=Company::find($id);
         return view('update_company', ['response'=>$result]);
     }
 }

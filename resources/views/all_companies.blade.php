@@ -28,7 +28,6 @@
             <th>Logo</th>
             <th>Update Company</th>
             <th>Delete Company</th>
-            <th>Show Details</th>
           </tr>
         </thead>
         <tbody>
@@ -60,9 +59,7 @@
                         <input type="submit" id="form" value="Delete" >
                     </form>
                  </td>
-                 <td>
-                    <a href="company/{{ $res->id }}" > Show</a>
-                 </td>
+                
             </tr>
         @endforeach
           

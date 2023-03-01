@@ -12,6 +12,7 @@
             <th>Id</th>
             <th>first name</th>
             <th>last name</th>
+            <th>Gender</th>
             <th>company id</th>
             <th>email</th>
             <th>phone</th>
@@ -30,6 +31,9 @@
                 </td>
                 <td>
                     {{ $res->last_name }}
+                 </td>
+                 <td>
+                    {{ $res->gender }}
                  </td>
                  <td>
                     {{ $res->company_id }}
@@ -51,9 +55,7 @@
                     </form>
                   {{-- <a href="employee/{{ $res->id }}" color: rgb(241 245 249); > Delete</a> --}}
                  </td>
-                 <td>
-                    <a href="employee/{{ $res->id }}" > Show</a>
-                 </td>
+                
             </tr>
         @endforeach
           
